@@ -120,14 +120,14 @@ public class PCPart{
      * Output an objects fields
      */
     @Override
-    public String toString(){
+    public String toString(PCPart pcPart){
         return  "PCPart: \n" +
-                "Brand = "           + brand + "\n" +
-                "model = "           + model + "\n" +
-                "installDate = "     + installDate + "\n" +
-                "maintenanceDate(s) = " + maintenanceSchedule + "\n" +
-                "totalLife = "       + totalLife + "\n" +
-                "totalUptime = "     + totalUptime + "\n"
+                "Brand = "           + this.brand + "\n" +
+                "model = "           + this.model + "\n" +
+                "installDate = "     + this.installDate + "\n" +
+                "maintenanceDate(s) = " + this.maintenanceSchedule + "\n" +
+                "totalLife = "       + this.totalLife + "\n" +
+                "totalUptime = "     + this.totalUptime + "\n"
                 ;
     }
 }

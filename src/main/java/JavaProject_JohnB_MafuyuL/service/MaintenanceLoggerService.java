@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 
-public class MaintenanceLogger {
+public class MaintenanceLoggerService {
     /**
      * This creates a new Maintenance Log and saves it to a file using writeToFile
      * @param keyboard defines the user's input

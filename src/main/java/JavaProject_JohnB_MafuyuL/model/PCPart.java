@@ -1,15 +1,16 @@
 package JavaProject_JohnB_MafuyuL.model;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PCPart{
     private String brand; //Brand of the part
     private String model; //Model number of the part
-    private Map<MaintType, LocalDate> maintenanceSchedule; //Next recommended date for maintenance
-    private LocalDate installDate; //Date it was installed on the PC
-    private long totalLife; //Estimated total lifespan of the part
-    private long totalUptime; //Estimated total Uptime of the part
+    private final Map<MaintType, LocalDateTime> maintenanceSchedule; //Next recommended date for maintenance
+    private LocalDateTime installDate; //Date it was installed on the PC
+    private int totalLife; //Estimated total lifespan of the part
+    private int totalUptime; //Estimated total Uptime of the part
+
     /**
      * Default Constructor
      */
@@ -21,113 +22,126 @@ public class PCPart{
         this.totalLife = -1;
         this.totalUptime = -1;
     }
+
     /**
      * Full Constructor
      */
-    public PCPart(String b, String m, LocalDate md, MaintType mt, LocalDate id, long tl, long ut){
+    public PCPart(String b, String m, LocalDateTime id, MaintType mt, LocalDateTime md, int tl, int ut){
         this.brand = b;
         this.model = m;
-        this.maintenanceSchedule.put(mt, md);
+        this.maintenanceSchedule = new HashMap<>();
+        if (mt != null && md != null) {
+            this.maintenanceSchedule.put(mt, md);
+        }
         this.installDate = id;
         this.totalLife = tl;
         this.totalUptime = ut;
     }
+
     /**
      * @return a String containing the PCPart name
      */
     public String getName(){
         return this.getClass().getSimpleName();
     }
+
     /**
      * Manually set or adjust the Brand
      */
     public void setBrand(String b){
         this.brand = b;
     }
+
     /**
      * @return a String containing the Brand
      */
     public String getBrand(){
         return this.brand;
     }
+
     /**
      * Manually set or adjust the Model
      */
     public void setModel(String m){
         this.model = m;
     }
+
     /**
      * @return a String containing the Model
      */
     public String getModel(){
         return this.model;
     }
+
     /**
      * add in or remap an instance of maintenance performed
      */
-    public void addMaintenance(MaintType type, LocalDate date){
+    public void addMaintenance(MaintType type, LocalDateTime date){
         this.maintenanceSchedule.put(type, date);
     }
-    /**
-     * @return a LocalDate for a given maintType or null if it DNE
-     */
-    public LocalDate getMaintenanceDate(MaintType type){
-        return this.maintenanceSchedule.get(type);
-    }
+
     /**
      * @return the map of maintTypes performed on the part
      */
-    public Map<MaintType, LocalDate> getMaintenanceMap(MaintType type){
+    public Map<MaintType, LocalDateTime> getMaintenanceMap(){
         return this.maintenanceSchedule;
     }
+
     /**
      * Manually set or adjust the date the part was installed on the PC
      */
-    public void setInstallDate(LocalDate id){
+    public void setInstallDate(LocalDateTime id){
         this.installDate = id;
     }
+
     /**
-     * @return a LocalDate containing the date the part was installed on the PC
+     * @return a LocalDateTime containing the date the part was installed on the PC
      */
-    public LocalDate getInstallDate(){
+    public LocalDateTime getInstallDate(){
         return this.installDate;
     }
+
     /**
-     * Manually set or adjust the estimated lifepan of the part using {@link LifespanCalc#calcTotalLife()}
+     * Manually set or adjust the estimated lifepan of the part
      */
-    public void setTotalLife(long tl){
+    public void setTotalLife(int tl){
         this.totalLife = tl;
     }
+
     /**
-     * @return a Long containing the estimated lifepan of the part
+     * @return an int containing the estimated lifepan of the part
      */
-    public long getTotalLife(){
+    public int getTotalLife(){
         return this.totalLife;
     }
+
     /**
      * Manually set or adjust the total uptime of the part
      */
-    public void setUptime(long ut){
+    public void setUptime(int ut){
         this.totalUptime = ut;
     }
+
     /**
-     * @return a Long containing the total uptime of the part
+     * @return an int containing the total uptime of the part
      */
-    public long getUptime(){
+    public int getUptime(){
         return this.totalUptime;
     }
+
     /**
      * Output an objects fields
      */
     @Override
-    public String toString(PCPart pcPart){
-        return  "PCPart: \n" +
-                "Brand = "           + this.brand + "\n" +
-                "model = "           + this.model + "\n" +
-                "installDate = "     + this.installDate + "\n" +
-                "maintenanceDate(s) = " + this.maintenanceSchedule + "\n" +
-                "totalLife = "       + this.totalLife + "\n" +
-                "totalUptime = "     + this.totalUptime + "\n"
+    public String toString(){
+        return  """
+                PCPart: 
+                Brand = """           + brand + "\n" +
+                "model = "           + model + "\n" +
+                "installDate = "     + installDate + "\n" +
+                "maintenanceDate(s) = " + maintenanceSchedule + "\n" +
+                "totalLife = "       + totalLife + "\n" +
+                "totalUptime = "     + totalUptime + "\n"
                 ;
     }
 }

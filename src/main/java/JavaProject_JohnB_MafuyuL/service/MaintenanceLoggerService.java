@@ -1,26 +1,30 @@
 package JavaProject_JohnB_MafuyuL.service;
-import java.util.Scanner;
-import java.time.LocalDate;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.util.Scanner;
+
+import JavaProject_JohnB_MafuyuL.model.MaintLog;
+import JavaProject_JohnB_MafuyuL.model.MaintType;
+import JavaProject_JohnB_MafuyuL.model.PCPart;
 
 public class MaintenanceLoggerService {
     /**
      * This creates a new Maintenance Log and saves it to a file using writeToFile
      * @param keyboard defines the user's input
      * @param partsList defines the different types of PCParts
-     *  */    
+     * */    
     public void createLog(Scanner keyboard, PCPart[] partsList) {
         // Get the Part by String
-        System.out.println("Which part was maintained?");
+        System.out.println("Which part was cleaned?");
         String partInput = keyboard.next().toUpperCase();
         
         PCPart selectedPart = null;
         
         // Loop through the array to find the matching part name
         for (PCPart p : partsList) {
-            if (p.getName().equals(partInput)) { 
+            if (p.getName().toUpperCase().equals(partInput)) { 
                 selectedPart = p;
                 break;
             }
@@ -43,8 +47,13 @@ public class MaintenanceLoggerService {
             return;
         }
         //Create the Log and call writeToFile
-        MaintLog newEntry = new MaintLog(selectedPart, LocalDate.now(), selectedType);
+        MaintLog newEntry = new MaintLog(selectedPart, LocalDateTime.now(), selectedType);
         writeToFile(newEntry);
+        //Update the schedule for next needed maintenance
+        int daysToAdd = JavaProject_JohnB_MafuyuL.util.LifespanCalcUtil.getMaintenanceInterval(selectedType);
+        LocalDateTime nextMaintDate = LocalDateTime.now().plusDays(daysToAdd);
+        selectedPart.addMaintenance(selectedType, nextMaintDate);
+        //Confirmation that it worked
         System.out.println("Log successfully saved!");
     }
     /**

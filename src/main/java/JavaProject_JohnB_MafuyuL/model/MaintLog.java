@@ -1,18 +1,18 @@
 package JavaProject_JohnB_MafuyuL.model;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MaintLog{
-    private PCPart PCPart;
-    private LocalDate currentDate;
-    private MaintType maintType;
+    private final PCPart PCPart;
+    private final LocalDateTime currentDate;
+    private final MaintType maintType;
 
-    public MaintLog(PCPart part, LocalDate time, MaintType TYPE){
+    public MaintLog(PCPart part, LocalDateTime time, MaintType TYPE){
         this.PCPart = part;
         this.currentDate = time;
         this.maintType = TYPE;
     }
     @Override
     public String toString() {
-        return currentDate + " | " + part.getName() + " | " + maintType;
+        return currentDate + " | " + PCPart.getName() + " | " + maintType;
     }
 }
